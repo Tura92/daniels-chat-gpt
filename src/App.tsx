@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
-import ChatInput from "./ChatInput";
+import Chat from "./ChatInput";
 
 const App: React.FC = () => {
   return (
     <div>
-      <ChatInput />
+      <Chat />
     </div>
   );
 };

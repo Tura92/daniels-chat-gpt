@@ -8,7 +8,7 @@ const headers = {
   "Content-Type": "application/json",
 };
 
-const ChatInput = () => {
+const Chat = () => {
   const [inputText, setInputText] = useState("");
   const [chatHistory, setChatHistory] = useState("");
 
@@ -51,4 +51,4 @@ const ChatInput = () => {
   );
 };
 
-export default ChatInput;
+export default Chat;
