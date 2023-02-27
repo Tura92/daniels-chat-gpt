@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./styles.scss";
 
 const API_URL = "https://api.openai.com/v1/completions";
 
@@ -39,14 +40,19 @@ const Chat = () => {
   };
 
   return (
-    <div>
-      <textarea readOnly value={chatHistory} />
-      <input
-        type="text"
-        value={inputText}
-        onChange={(event) => setInputText(event.target.value)}
-      />
-      <button onClick={handleSend}>Send</button>
+    <div className="chat-container">
+      <div className="chat-history">
+        <textarea readOnly value={chatHistory} />
+      </div>
+      <div className="chat-input">
+        <input
+          type="text"
+          value={inputText}
+          onChange={(event) => setInputText(event.target.value)}
+          placeholder="Type your message here"
+        />
+        <button onClick={handleSend}>Send</button>
+      </div>
     </div>
   );
 };
