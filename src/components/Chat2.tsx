@@ -41,10 +41,7 @@ const Chat2: FC = (): ReactElement => {
         { headers: headers }
       )
       .then((response) => {
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          new MessageModel("chat", response.data.choices[0].text),
-        ]);
+        addMessage(new MessageModel("chat", response.data.choices[0].text));
       })
       .catch((error) => {
         console.error(error);
