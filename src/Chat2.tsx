@@ -3,9 +3,10 @@ import axios from "axios";
 import "./styles.scss";
 
 const API_URL = "https://api.openai.com/v1/completions";
+const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
 
 const headers = {
-  Authorization: "Bearer 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",
+  Authorization: `Bearer ${API_KEY}`,
   "Content-Type": "application/json",
 };
 
@@ -16,7 +17,6 @@ const Chat = () => {
   const handleSend = () => {
     const updatedChatHistory = chatHistory + "[User]: " + inputText;
     setChatHistory(updatedChatHistory);
-    console.log(updatedChatHistory);
 
     axios
       .post(

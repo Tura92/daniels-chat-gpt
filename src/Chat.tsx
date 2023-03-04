@@ -17,7 +17,6 @@ const Chat = () => {
   const handleSend = () => {
     const updatedChatHistory = chatHistory + "[User]: " + inputText;
     setChatHistory(updatedChatHistory);
-    console.log(updatedChatHistory);
 
     axios
       .post(

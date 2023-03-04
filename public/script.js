@@ -1,2 +1,4 @@
-var chat = document.getElementById('chat');
-   chat.scrollTop = chat.scrollHeight - chat.clientHeight;
+document.addEventListener("DOMContentLoaded", function () {
+  var chat = document.getElementById("chat");
+  chat.scrollTop = chat.scrollHeight - chat.clientHeight;
+});
