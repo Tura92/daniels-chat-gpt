@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import "../styles.scss";
 import MessageModel from "../models/Message";
@@ -24,12 +24,13 @@ const Chat2: FC = (): ReactElement => {
   const [inputText, setInputText] = useState("");
   const [messages, setMessages] = useState<MessageModel[]>([]);
   const [isThinking, setIsThinking] = useState<boolean>(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const addMessage = (message: MessageModel) => {
     setMessages((prevMessages) => [...prevMessages, message]);
   };
 
-  const axiosRequest = (newMessages: MessageModel[]) => {
+  const axiosRequest = () => {
     setIsThinking(true);
     axios
       .post(
@@ -54,9 +55,8 @@ const Chat2: FC = (): ReactElement => {
   };
 
   const handleSend = () => {
-    const updatedMessages = [...messages, new MessageModel("me", inputText)];
-    setMessages(updatedMessages);
-    axiosRequest(updatedMessages);
+    addMessage(new MessageModel("me", inputText));
+    axiosRequest();
     setInputText("");
   };
 
@@ -80,6 +80,12 @@ const Chat2: FC = (): ReactElement => {
     );
   };
 
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
+
   return (
     <div className="chat-container">
       <div className="center">
@@ -92,6 +98,7 @@ const Chat2: FC = (): ReactElement => {
                 <MessageComponent key={message.id} message={message} />
               ))}
               <div>{isThinking && loadingMessage()}</div>
+              <div ref={messagesEndRef} />
             </div>
           </div>
           <div className="input">
