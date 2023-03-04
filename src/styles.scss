@@ -9,8 +9,9 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.chat-history {
+.chat-history textarea {
   height: 400px;
+  width: 570px;
   padding: 10px;
   margin-bottom: 10px;
   overflow-y: scroll;

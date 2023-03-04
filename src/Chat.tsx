@@ -16,7 +16,7 @@ const Chat = () => {
   const handleSend = () => {
     const updatedChatHistory = chatHistory + "[User]: " + inputText;
     setChatHistory(updatedChatHistory);
-    console.log(chatHistory);
+    console.log(updatedChatHistory);
 
     axios
       .post(
@@ -31,12 +31,27 @@ const Chat = () => {
       )
       .then((response) => {
         setChatHistory(
-          updatedChatHistory + "\n" + response.data.choices[0].text + "\n"
+          updatedChatHistory +
+            "\n[text-davinci-003]: " +
+            response.data.choices[0].text +
+            "\n\n"
         );
       })
       .catch((error) => {
         console.error(error);
       });
+
+    setInputText("");
+  };
+
+  const handleKeyDown = (event: {
+    keyCode: number;
+    preventDefault: () => void;
+  }) => {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      handleSend();
+    }
   };
 
   return (
@@ -48,6 +63,7 @@ const Chat = () => {
         <input
           type="text"
           value={inputText}
+          onKeyDown={handleKeyDown}
           onChange={(event) => setInputText(event.target.value)}
           placeholder="Type your message here"
         />
