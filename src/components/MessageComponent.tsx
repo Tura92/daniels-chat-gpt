@@ -5,6 +5,7 @@ interface MessageProps {
     id: number;
     creator: string;
     content: string;
+    tokens: number;
     timestamp: Date;
   };
 }

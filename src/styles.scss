@@ -172,6 +172,18 @@ body, html {
   -webkit-animation: typing 3s 500ms infinite;
           animation: typing 3s 500ms infinite;
 }
+
+.messages {
+  height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: none; /* hide scrollbar for Firefox */
+  -ms-overflow-style: none; /* hide scrollbar for IE/Edge */
+}
+
+/* hide scrollbar for Chrome/Safari/Opera */
+.messages::-webkit-scrollbar {
+  display: none;
+}
 .chat .input {
   box-sizing: border-box;
   flex-basis: 4rem;

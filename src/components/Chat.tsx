@@ -6,16 +6,7 @@ import MessageComponent from "./MessageComponent";
 
 const API_URL = "https://api.openai.com/v1/completions";
 const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
-
-let testMessages: MessageModel[] = [
-  new MessageModel("Alice", "Hi there!"),
-  new MessageModel("Bob", "Hey Alice, how's it going?"),
-  new MessageModel("Alice", "Not bad, thanks. How about you?"),
-  new MessageModel("Bob", "Pretty good, just been busy with work."),
-  new MessageModel("Alice", "I know the feeling!"),
-];
-
-const headers = {
+const HEADERS = {
   Authorization: `Bearer ${API_KEY}`,
   "Content-Type": "application/json",
 };
@@ -32,6 +23,7 @@ const Chat: FC = (): ReactElement => {
 
   const axiosRequest = () => {
     setIsThinking(true);
+    const inputPrompt = "";
     axios
       .post(
         `${API_URL}`,
@@ -39,9 +31,9 @@ const Chat: FC = (): ReactElement => {
           prompt: inputText,
           model: "text-davinci-003",
           temperature: 0.7,
-          max_tokens: 2048,
+          max_tokens: 3000,
         },
-        { headers: headers }
+        { headers: HEADERS }
       )
       .then((response) => {
         addMessage(new MessageModel("chat", response.data.choices[0].text));

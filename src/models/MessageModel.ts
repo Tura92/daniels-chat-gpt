@@ -4,6 +4,7 @@ class Message {
   private _id: number;
   private _creator: string;
   private _content: string;
+  private _tokens: number;
   private _timestamp: Date;
 
   constructor(creator: string, content: string) {
@@ -11,6 +12,7 @@ class Message {
     this._id = Message.lastId;
     this._creator = creator;
     this._content = content;
+    this._tokens = 0;
     this._timestamp = new Date();
   }
 
@@ -32,6 +34,14 @@ class Message {
 
   set content(content: string) {
     this._content = content;
+  }
+
+  get tokens(): number {
+    return this._tokens;
+  }
+
+  set tokens(tokens: number) {
+    this._tokens = tokens;
   }
 
   get timestamp(): Date {
