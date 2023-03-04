@@ -1,8 +1,8 @@
 import React, { FC, ReactElement, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import "../styles.scss";
-import MessageModel from "../models/Message";
-import MessageComponent from "./Message";
+import MessageModel from "../models/MessageModel";
+import MessageComponent from "./MessageComponent";
 
 const API_URL = "https://api.openai.com/v1/completions";
 const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
@@ -20,7 +20,7 @@ const headers = {
   "Content-Type": "application/json",
 };
 
-const Chat2: FC = (): ReactElement => {
+const Chat: FC = (): ReactElement => {
   const [inputText, setInputText] = useState("");
   const [messages, setMessages] = useState<MessageModel[]>([]);
   const [isThinking, setIsThinking] = useState<boolean>(false);
@@ -117,4 +117,4 @@ const Chat2: FC = (): ReactElement => {
   );
 };
 
-export default Chat2;
+export default Chat;

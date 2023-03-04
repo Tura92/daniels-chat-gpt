@@ -1,12 +1,11 @@
 import React from "react";
 import "./App.css";
-import Chat2 from "./components/Chat2";
-
+import Chat from "./components/Chat";
 
 const App: React.FC = () => {
   return (
     <div>
-      <Chat2 />
+      <Chat />
     </div>
   );
 };
