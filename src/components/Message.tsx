@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 interface MessageProps {
   message: {
@@ -10,7 +10,11 @@ interface MessageProps {
 }
 
 const MessageComponent: React.FC<MessageProps> = ({ message }) => {
-  return <div className="message">{message.content}</div>;
+  return (
+    <div className={`message ${message.creator === "me" ? "right" : ""}`}>
+      {message.content}
+    </div>
+  );
 };
 
 export default MessageComponent;
