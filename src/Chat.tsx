@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./styles.scss";
+import "./chatStyles.scss";
 
 const API_URL = "https://api.openai.com/v1/completions";
 const apiKey = process.env.REACT_APP_OPENAI_API_KEY;

@@ -6,7 +6,7 @@ import Chat2 from "./Chat2";
 const App: React.FC = () => {
   return (
     <div>
-      <Chat2 />
+      <Chat />
     </div>
   );
 };
