@@ -1,42 +1,45 @@
 import React, { FC, ReactElement, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import "../styles.scss";
-import MessageModel from "../models/MessageModel";
-import MessageComponent from "./MessageComponent";
 
-const API_URL = "https://api.openai.com/v1/completions";
+const API_URL = "https://api.openai.com/v1/chat/completions";
 const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
 const HEADERS = {
   Authorization: `Bearer ${API_KEY}`,
   "Content-Type": "application/json",
 };
 
+interface Message {
+  role: "user" | "assistant";
+  content: string;
+}
+
 const Chat: FC = (): ReactElement => {
   const [inputText, setInputText] = useState("");
-  const [messages, setMessages] = useState<MessageModel[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [isThinking, setIsThinking] = useState<boolean>(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const addMessage = (message: MessageModel) => {
-    setMessages((prevMessages) => [...prevMessages, message]);
-  };
-
-  const axiosRequest = () => {
+  const axiosRequest = (messages: Message[]) => {
     setIsThinking(true);
-    const inputPrompt = "";
     axios
       .post(
         `${API_URL}`,
         {
-          prompt: inputText,
-          model: "text-davinci-003",
-          temperature: 0.7,
-          max_tokens: 3000,
+          model: "gpt-3.5-turbo",
+          messages: messages,
         },
         { headers: HEADERS }
       )
       .then((response) => {
-        addMessage(new MessageModel("chat", response.data.choices[0].text));
+        const assistantMessage: Message = {
+          role: "assistant",
+          content: `${response.data.choices[0].message.content}`,
+        };
+
+        const newMessages = [...messages, assistantMessage];
+
+        setMessages(newMessages);
       })
       .catch((error) => {
         console.error(error);
@@ -47,8 +50,18 @@ const Chat: FC = (): ReactElement => {
   };
 
   const handleSend = () => {
-    addMessage(new MessageModel("me", inputText));
-    axiosRequest();
+    const userMessage: Message = {
+      role: "user",
+      content: `${inputText}`,
+    };
+
+    const newMessages = [...messages, userMessage];
+
+    // Call axiosRequest with the updated messages array
+    axiosRequest(newMessages);
+
+    // Update state with the new messages array and clear input
+    setMessages(newMessages);
     setInputText("");
   };
 
@@ -86,8 +99,15 @@ const Chat: FC = (): ReactElement => {
             <div className="time">Today at 11:41</div>
             <div className="message">Ask me something!</div>
             <div>
-              {messages.map((message) => (
-                <MessageComponent key={message.id} message={message} />
+              {messages.map((message, index) => (
+                <div
+                  key={index++}
+                  className={`message ${
+                    message.role === "user" ? "right" : ""
+                  }`}
+                >
+                  {message.content}
+                </div>
               ))}
               <div>{isThinking && loadingMessage()}</div>
               <div ref={messagesEndRef} />
