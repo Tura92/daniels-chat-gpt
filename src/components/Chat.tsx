@@ -96,8 +96,7 @@ const Chat: FC = (): ReactElement => {
       <div className="center">
         <div className="chat">
           <div className="messages" id="chat">
-            <div className="time">Today at 11:41</div>
-            <div className="message">Ask me something!</div>
+            <div className="message">Start a conversation!</div>
             <div>
               {messages.map((message, index) => (
                 <div
